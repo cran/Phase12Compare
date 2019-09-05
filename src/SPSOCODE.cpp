@@ -524,7 +524,7 @@ double CHOOSE(int n, int x){
 
   double Sum1=0;
 
-  int k=0;
+   double k=0;
   for(k=1;k<x;k++){
     Sum1=Sum1+log(k);
   }
@@ -4209,7 +4209,7 @@ List AssignEffToxUT( arma::vec YE, //Observed Efficacy Indicator Vector
 
 
 
-  int B1 = B/2;
+  double B1 = B/2;
 
   //Used for for loop
   int b=0;
@@ -4496,9 +4496,9 @@ List AssignEffToxUT( arma::vec YE, //Observed Efficacy Indicator Vector
 
 //Rprintf("GOT STUFF");
  double Con = (exp(psi)-1)/(exp(psi)+1);
-double Con1;
-  double piE;
-  double piT;
+double Con1=0;
+  double piE=0;
+  double piT=0;
 
 //  Rf_PrintValue(wrap(UT));
 

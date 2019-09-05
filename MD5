@@ -1,4 +1,4 @@
-3e49e52cd1c1cdd546f1e744c8ee1afe *DESCRIPTION
+597861a5c899d2fbfc7bedd50c206caa *DESCRIPTION
 a2e5a29bd59bb3dba4890ee0bdd716fe *NAMESPACE
 5cbda3a69c502445ec3462f15693c86f *R/GetEfftoxContour.R
 e117cd5631dd5be2ca0683fc78a0af6c *R/GetEfftoxUt.R
@@ -28,4 +28,4 @@ e295fbf95338905ba0099ed015dede9f *man/SimEfftoxContour.Rd
 bfd347eee48f64014a740fa3ce77a657 *man/SimSpsoUt.Rd
 a85fee0a507b97e0686b2ca9d5279c2e *man/UTEFFTOX.Rd
 e3abfa00203d627ba98cdd133ee5ddbe *src/RcppExports.cpp
-304ce1183989feecb12d83a787427cdc *src/SPSOCODE.cpp
+8459e33a52f9d3964f5124b21e4311b5 *src/SPSOCODE.cpp
