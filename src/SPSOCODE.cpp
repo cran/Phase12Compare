@@ -1,6 +1,4 @@
-#include <time.h>
 #include <Rmath.h>
-#include <math.h>
 #define ARMA_DONT_PRINT_ERRORS
 #include <RcppArmadillo.h>
 #include <Rcpp.h>
@@ -9,14 +7,11 @@
 #include <vector>
 #include <iterator>
 #include <list>
-#include <iostream>     // std::cout
-#include <cmath>
-#include <cfloat>
 
 // [[Rcpp::depends(RcppArmadillo)]]
 
 
-
+using namespace std;
 using namespace Rcpp;
 
 
@@ -108,7 +103,7 @@ double abs1(double a){
 //Returns the maximum from a vector
 double MaxVec(arma::vec Y){
   int J1=Y.n_rows;
-  int j;
+  int j=0;
   double max=Y[0];
   for(j=1;j<J1;j++){
     if(Y[j]>max){
@@ -126,7 +121,7 @@ double MaxVec(arma::vec Y){
 //Gets max of subvec
 double MaxSubVec(arma::vec Y,int k){
 
-  int j;
+  int j=0;
   double max=Y[0];
   for(j=1;j<k;j++){
     if(Y[j]>max){
@@ -145,7 +140,7 @@ double MinSubVec(arma::vec Y1,int k,arma::vec ORDER){
 
 
   int J1=Y.n_rows;
-  int j;
+  int j=0;
 
   for(j=0;j<J1;j++){
     Y(j)=Y1(Y1.n_rows-j-1);
@@ -461,7 +456,7 @@ int GetDoseUT(arma::vec DESIRE){
 
 
 double GetSd(arma::vec X){
-  int Mean = sum(X)/X.n_rows;
+  double Mean = sum(X)/X.n_rows;
 
   return(pow(sum(pow(X-Mean,2))/(X.n_rows-1),.5));
 
@@ -475,7 +470,7 @@ double GetSd(arma::vec X){
 
 double MinVec(arma::vec Y){
   int J1=Y.n_rows;
-  int j;
+  int j=0;
   double max=Y[0];
   for(j=1;j<J1;j++){
     if(Y[j]<max){
@@ -493,7 +488,7 @@ double MinVec(arma::vec Y){
 int GetOrderSum(arma::vec Y){
 
   int max1=0;
-  int k;
+  int k=0;
   for(k=1;k<Y.n_rows;k++){
     if(Y(k)>Y(k-1)){
       max1++;
@@ -613,6 +608,9 @@ double Like(arma::vec YE1, //Binary indicators of efficacy
   arma::vec YE(Num);
   arma::vec YT(Num);
   arma::vec Dose(Num);
+  YE.zeros();
+  YT.zeros();
+  Dose.zeros();
 
   //Loop over the doses for the likelihood
   //Doses
@@ -639,7 +637,7 @@ double Like(arma::vec YE1, //Binary indicators of efficacy
   // 3 Tox - No Eff
   // 4 Both
   arma::vec probs(4);
-
+probs.zeros();
   //Association Constand
   double Con = (exp(psi)-1)/(exp(psi)+1);
   double Con1=0;
@@ -1002,7 +1000,7 @@ List RunAdaptiveEffToxTrialCORR( int DoseStart, //Dose level to START the EFF-To
                                  int cohort, //Cohort size
                                  int NET, //Maximum Sample size to run the EFFtox Trial, must be divisible by cohort
                                  int NF, //Minimum sample size to begin adaptive randomization, must be divisible by count
-                                 int B, // Number of reps to perform in MCMC
+                                 double B, // Number of reps to perform in MCMC
                                  int nSims, //Number of Simulated trials to run.
                                  arma::mat PMAT //Contains TRUE pi00,pi10, pi01, pi11 for each dose
 ){
@@ -1861,7 +1859,7 @@ List RunAdaptiveEffToxTrialCORRCONTOUR( int DoseStart, //Dose level to START the
                                         int cohort, //Cohort size
                                         int NET, //Maximum Sample size to run the EFFtox Trial, must be divisible by cohort
                                         int NF, //Minimum sample size to begin adaptive randomization, must be divisible by count
-                                        int B, // Number of reps to perform in MCMC
+                                        double B, // Number of reps to perform in MCMC
                                         int nSims, //Number of Simulated trials to run.
                                         arma::mat PMAT //Matrix of Probs
 ){
@@ -1939,7 +1937,7 @@ List RunAdaptiveEffToxTrialCORRCONTOUR( int DoseStart, //Dose level to START the
 
 
 
-  int B1 = B/2;
+  double B1 = B/2;
 
   //Used for for loop
   int b=0;
@@ -2747,7 +2745,7 @@ List UTEFFTOX(arma::vec YE, //Binary indicators of efficacy
               arma::vec HypermeansEFF, //Vector of length nDose + 1 for dose prior means for efficacy
               arma::vec HypermeansTOX, //Vector of length nDose + 1 for dose prior means for toxicity
               arma::vec Hypervars, // (\sigma^2_E, \sigma^2_T, \sigma^2_{E,0},\sigma^2_{T,0}, \tau^2, \corr between EFF-TOX )
-              int B // Number of reps to perform in MCMC
+              double B // Number of reps to perform in MCMC
 ){
 
 
@@ -2776,7 +2774,7 @@ List UTEFFTOX(arma::vec YE, //Binary indicators of efficacy
 
 
   //Important Integers
-  int B1 = B/2;
+  double B1 = B/2;
   //Used for for loop
   int b=0;
   int i=0; //Patient level index
@@ -2919,7 +2917,7 @@ List UTEFFTOX(arma::vec YE, //Binary indicators of efficacy
   double crho = .125;
   rho=0;
 
-  int k;
+  int k=0;
 
 
   double pmono=.75;
@@ -3691,7 +3689,7 @@ List AssignEffTox( arma::vec YE, //Observed Efficacy Indicator Vector
                   arma::vec Contour, //4 vector of Contour parameter
                   arma::vec PiLim, //2 vector of acceptable limits
                   arma::vec ProbLim, //2 vector of cutoff for acceptabilities
-                  int B // Number of reps to perform in MCMC
+                  double B // Number of reps to perform in MCMC
 ){
 
   arma::vec Accept=PiLim;
@@ -3739,6 +3737,7 @@ List AssignEffTox( arma::vec YE, //Observed Efficacy Indicator Vector
   //What Doses are Acceptable
 
   arma::vec ACCTOX(Dose.n_rows);
+  ACCTOX.zeros();
   arma::vec ACCEFF=ACCTOX;
 
 
@@ -3748,7 +3747,7 @@ List AssignEffTox( arma::vec YE, //Observed Efficacy Indicator Vector
 
 
 
-  int B1 = B/2;
+  double B1 = B/2;
 
   //Used for for loop
   int b=0;
@@ -4168,7 +4167,7 @@ List AssignEffToxUT( arma::vec YE, //Observed Efficacy Indicator Vector
                    arma::mat UT, //4 vector of Contour parameter
                    arma::vec PiLim, //2 vector of acceptable limits
                    arma::vec ProbLim, //2 vector of cutoff for acceptabilities
-                   int B // Number of reps to perform in MCMC
+                   double B // Number of reps to perform in MCMC
 ){
 
   arma::vec Accept=PiLim;
@@ -4186,6 +4185,10 @@ List AssignEffToxUT( arma::vec YE, //Observed Efficacy Indicator Vector
   arma::vec ACCEPT(Dose.n_rows);
   ACCEPTTOX.zeros();
   ACCEPTEFF.zeros();
+  DESIRE.zeros();
+  MeanUt.zeros();
+  PiEff.zeros();
+  PiTox.zeros();
 
   double p=0;
   double pu=0;
@@ -4200,6 +4203,7 @@ List AssignEffToxUT( arma::vec YE, //Observed Efficacy Indicator Vector
   //What Doses are Acceptable
 
   arma::vec ACCTOX(Dose.n_rows);
+  ACCTOX.zeros();
   arma::vec ACCEFF=ACCTOX;
 
 
@@ -4223,11 +4227,14 @@ List AssignEffToxUT( arma::vec YE, //Observed Efficacy Indicator Vector
   arma::mat AcceptEff(B1,Dose.n_rows);
   AcceptTox.zeros();
   AcceptEff.zeros();
+  piEStore.zeros();
+  piTStore.zeros();
   arma::vec DESIRE2(Dose.n_rows);
   DESIRE2.zeros();
 
 
   arma::mat ParamStore(B1,6);
+  ParamStore.zeros();
   //Setup innitial
   arma::vec beta(5);
   beta.zeros();
@@ -4378,7 +4385,6 @@ List AssignEffToxUT( arma::vec YE, //Observed Efficacy Indicator Vector
 
     //Get new Psi
 
-    //toxicity slope
     j=5;
 
     psiprop=as_scalar(arma::randn(1))*bvar[j] + psi;

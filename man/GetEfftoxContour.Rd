@@ -4,8 +4,8 @@
 \alias{GetEfftoxContour}
 \title{Assigns next patient cohort based on the Efftox model with a Desirability based objective function.}
 \usage{
-GetEfftoxContour(YE, YT, Doses, Dose, Dosetried, cohort, Contour, CutE, CutT,
-  AcceptE, AcceptT, HypermeansEFF, HypervarsEFF, B)
+GetEfftoxContour(YE, YT, Doses, Dose, Dosetried, cohort, Contour, CutE,
+  CutT, AcceptE, AcceptT, HypermeansEFF, HypervarsEFF, B)
 }
 \arguments{
 \item{YE}{Length n binary indicator vector of efficacy status.}

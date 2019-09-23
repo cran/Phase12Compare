@@ -4,8 +4,8 @@
 \alias{SimSpsoUt}
 \title{Simulates trial replications from the SPSO model with desirability optimality function.}
 \usage{
-SimSpsoUt(NSims, PE, PT, corET, Nmax, cohort, UT, CutE, CutT, AcceptE, AcceptT,
-  HypermeansE, HypermeansT, Hypervars)
+SimSpsoUt(NSims, PE, PT, corET, Nmax, cohort, UT, CutE, CutT, AcceptE,
+  AcceptT, HypermeansE, HypermeansT, Hypervars)
 }
 \arguments{
 \item{NSims}{Number of trial simulations to run.}

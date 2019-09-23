@@ -4,8 +4,8 @@
 \alias{GetSpsoContour}
 \title{Assigns next patient cohort based on the SPSOP model with a Utility based objective function.}
 \usage{
-GetSpsoContour(YE, YT, Doses, Dosetried, cohort, Contour, CutE, CutT, AcceptE,
-  AcceptT, HypermeansE, HypermeansT, Hypervars, B)
+GetSpsoContour(YE, YT, Doses, Dosetried, cohort, Contour, CutE, CutT,
+  AcceptE, AcceptT, HypermeansE, HypermeansT, Hypervars, B)
 }
 \arguments{
 \item{YE}{Length n binary indicator vector of efficacy status.}

@@ -4,8 +4,8 @@
 \alias{SimSpsoContour}
 \title{Simulates trial replications from the SPSO model with desirability optimality function.}
 \usage{
-SimSpsoContour(NSims, PE, PT, corET, Nmax, cohort, Contour, CutE, CutT, AcceptE,
-  AcceptT, HypermeansE, HypermeansT, Hypervars)
+SimSpsoContour(NSims, PE, PT, corET, Nmax, cohort, Contour, CutE, CutT,
+  AcceptE, AcceptT, HypermeansE, HypermeansT, Hypervars)
 }
 \arguments{
 \item{NSims}{Number of trial simulations to run.}

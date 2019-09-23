@@ -43,7 +43,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // RunAdaptiveEffToxTrialCORR
-List RunAdaptiveEffToxTrialCORR(int DoseStart, arma::vec Dose, arma::vec Hypermeans, arma::vec Hypervars, arma::mat UT, arma::vec PiLim, arma::vec ProbLim, int cohort, int NET, int NF, int B, int nSims, arma::mat PMAT);
+List RunAdaptiveEffToxTrialCORR(int DoseStart, arma::vec Dose, arma::vec Hypermeans, arma::vec Hypervars, arma::mat UT, arma::vec PiLim, arma::vec ProbLim, int cohort, int NET, int NF, double B, int nSims, arma::mat PMAT);
 RcppExport SEXP _Phase12Compare_RunAdaptiveEffToxTrialCORR(SEXP DoseStartSEXP, SEXP DoseSEXP, SEXP HypermeansSEXP, SEXP HypervarsSEXP, SEXP UTSEXP, SEXP PiLimSEXP, SEXP ProbLimSEXP, SEXP cohortSEXP, SEXP NETSEXP, SEXP NFSEXP, SEXP BSEXP, SEXP nSimsSEXP, SEXP PMATSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -58,7 +58,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type cohort(cohortSEXP);
     Rcpp::traits::input_parameter< int >::type NET(NETSEXP);
     Rcpp::traits::input_parameter< int >::type NF(NFSEXP);
-    Rcpp::traits::input_parameter< int >::type B(BSEXP);
+    Rcpp::traits::input_parameter< double >::type B(BSEXP);
     Rcpp::traits::input_parameter< int >::type nSims(nSimsSEXP);
     Rcpp::traits::input_parameter< arma::mat >::type PMAT(PMATSEXP);
     rcpp_result_gen = Rcpp::wrap(RunAdaptiveEffToxTrialCORR(DoseStart, Dose, Hypermeans, Hypervars, UT, PiLim, ProbLim, cohort, NET, NF, B, nSims, PMAT));
@@ -66,7 +66,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // RunAdaptiveEffToxTrialCORRCONTOUR
-List RunAdaptiveEffToxTrialCORRCONTOUR(int DoseStart, arma::vec Dose, arma::vec Hypermeans, arma::vec Hypervars, arma::vec Contour, arma::vec PiLim, arma::vec ProbLim, int cohort, int NET, int NF, int B, int nSims, arma::mat PMAT);
+List RunAdaptiveEffToxTrialCORRCONTOUR(int DoseStart, arma::vec Dose, arma::vec Hypermeans, arma::vec Hypervars, arma::vec Contour, arma::vec PiLim, arma::vec ProbLim, int cohort, int NET, int NF, double B, int nSims, arma::mat PMAT);
 RcppExport SEXP _Phase12Compare_RunAdaptiveEffToxTrialCORRCONTOUR(SEXP DoseStartSEXP, SEXP DoseSEXP, SEXP HypermeansSEXP, SEXP HypervarsSEXP, SEXP ContourSEXP, SEXP PiLimSEXP, SEXP ProbLimSEXP, SEXP cohortSEXP, SEXP NETSEXP, SEXP NFSEXP, SEXP BSEXP, SEXP nSimsSEXP, SEXP PMATSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -81,7 +81,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type cohort(cohortSEXP);
     Rcpp::traits::input_parameter< int >::type NET(NETSEXP);
     Rcpp::traits::input_parameter< int >::type NF(NFSEXP);
-    Rcpp::traits::input_parameter< int >::type B(BSEXP);
+    Rcpp::traits::input_parameter< double >::type B(BSEXP);
     Rcpp::traits::input_parameter< int >::type nSims(nSimsSEXP);
     Rcpp::traits::input_parameter< arma::mat >::type PMAT(PMATSEXP);
     rcpp_result_gen = Rcpp::wrap(RunAdaptiveEffToxTrialCORRCONTOUR(DoseStart, Dose, Hypermeans, Hypervars, Contour, PiLim, ProbLim, cohort, NET, NF, B, nSims, PMAT));
@@ -89,7 +89,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // UTEFFTOX
-List UTEFFTOX(arma::vec YE, arma::vec YT, arma::vec Doses, arma::vec HypermeansEFF, arma::vec HypermeansTOX, arma::vec Hypervars, int B);
+List UTEFFTOX(arma::vec YE, arma::vec YT, arma::vec Doses, arma::vec HypermeansEFF, arma::vec HypermeansTOX, arma::vec Hypervars, double B);
 RcppExport SEXP _Phase12Compare_UTEFFTOX(SEXP YESEXP, SEXP YTSEXP, SEXP DosesSEXP, SEXP HypermeansEFFSEXP, SEXP HypermeansTOXSEXP, SEXP HypervarsSEXP, SEXP BSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -100,13 +100,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::vec >::type HypermeansEFF(HypermeansEFFSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type HypermeansTOX(HypermeansTOXSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type Hypervars(HypervarsSEXP);
-    Rcpp::traits::input_parameter< int >::type B(BSEXP);
+    Rcpp::traits::input_parameter< double >::type B(BSEXP);
     rcpp_result_gen = Rcpp::wrap(UTEFFTOX(YE, YT, Doses, HypermeansEFF, HypermeansTOX, Hypervars, B));
     return rcpp_result_gen;
 END_RCPP
 }
 // AssignEffTox
-List AssignEffTox(arma::vec YE, arma::vec YT, arma::vec Doses, arma::vec Dose, arma::vec DosesTried, arma::vec Hypermeans, arma::vec Hypervars, arma::vec Contour, arma::vec PiLim, arma::vec ProbLim, int B);
+List AssignEffTox(arma::vec YE, arma::vec YT, arma::vec Doses, arma::vec Dose, arma::vec DosesTried, arma::vec Hypermeans, arma::vec Hypervars, arma::vec Contour, arma::vec PiLim, arma::vec ProbLim, double B);
 RcppExport SEXP _Phase12Compare_AssignEffTox(SEXP YESEXP, SEXP YTSEXP, SEXP DosesSEXP, SEXP DoseSEXP, SEXP DosesTriedSEXP, SEXP HypermeansSEXP, SEXP HypervarsSEXP, SEXP ContourSEXP, SEXP PiLimSEXP, SEXP ProbLimSEXP, SEXP BSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -121,13 +121,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::vec >::type Contour(ContourSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type PiLim(PiLimSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type ProbLim(ProbLimSEXP);
-    Rcpp::traits::input_parameter< int >::type B(BSEXP);
+    Rcpp::traits::input_parameter< double >::type B(BSEXP);
     rcpp_result_gen = Rcpp::wrap(AssignEffTox(YE, YT, Doses, Dose, DosesTried, Hypermeans, Hypervars, Contour, PiLim, ProbLim, B));
     return rcpp_result_gen;
 END_RCPP
 }
 // AssignEffToxUT
-List AssignEffToxUT(arma::vec YE, arma::vec YT, arma::vec Doses, arma::vec Dose, arma::vec DosesTried, arma::vec Hypermeans, arma::vec Hypervars, arma::mat UT, arma::vec PiLim, arma::vec ProbLim, int B);
+List AssignEffToxUT(arma::vec YE, arma::vec YT, arma::vec Doses, arma::vec Dose, arma::vec DosesTried, arma::vec Hypermeans, arma::vec Hypervars, arma::mat UT, arma::vec PiLim, arma::vec ProbLim, double B);
 RcppExport SEXP _Phase12Compare_AssignEffToxUT(SEXP YESEXP, SEXP YTSEXP, SEXP DosesSEXP, SEXP DoseSEXP, SEXP DosesTriedSEXP, SEXP HypermeansSEXP, SEXP HypervarsSEXP, SEXP UTSEXP, SEXP PiLimSEXP, SEXP ProbLimSEXP, SEXP BSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -142,7 +142,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::mat >::type UT(UTSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type PiLim(PiLimSEXP);
     Rcpp::traits::input_parameter< arma::vec >::type ProbLim(ProbLimSEXP);
-    Rcpp::traits::input_parameter< int >::type B(BSEXP);
+    Rcpp::traits::input_parameter< double >::type B(BSEXP);
     rcpp_result_gen = Rcpp::wrap(AssignEffToxUT(YE, YT, Doses, Dose, DosesTried, Hypermeans, Hypervars, UT, PiLim, ProbLim, B));
     return rcpp_result_gen;
 END_RCPP
