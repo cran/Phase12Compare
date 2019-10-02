@@ -4185,6 +4185,7 @@ List AssignEffToxUT( arma::vec YE, //Observed Efficacy Indicator Vector
   arma::vec ACCEPT(Dose.n_rows);
   ACCEPTTOX.zeros();
   ACCEPTEFF.zeros();
+  ACCEPT.zeros();
   DESIRE.zeros();
   MeanUt.zeros();
   PiEff.zeros();
@@ -4522,7 +4523,7 @@ double Con1=0;
           //Now we have the probabilities of toxictity and efficacy for this dose.
           Con1 = piE*(1-piE)*piT*(1-piT)*Con;
           DESIRE[j]=UT(0,0)*(Con1 + (1-piE)*(1-piT))+UT(0,1)*((1-piT)*piE - Con1) + UT(1,1)*(piE*piT + Con1);
-
+ACCEPT[j]=1;
 
     }else{
       ACCEPT[j]=0;
