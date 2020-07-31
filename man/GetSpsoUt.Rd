@@ -4,8 +4,22 @@
 \alias{GetSpsoUt}
 \title{Assigns next patient cohort based on the SPSOP model with a Utility based objective function.}
 \usage{
-GetSpsoUt(YE, YT, Doses, Dosetried, cohort, UT, CutE, CutT, AcceptE,
-  AcceptT, HypermeansE, HypermeansT, Hypervars, B)
+GetSpsoUt(
+  YE,
+  YT,
+  Doses,
+  Dosetried,
+  cohort,
+  UT,
+  CutE,
+  CutT,
+  AcceptE,
+  AcceptT,
+  HypermeansE,
+  HypermeansT,
+  Hypervars,
+  B
+)
 }
 \arguments{
 \item{YE}{Length n binary indicator vector of efficacy status.}

@@ -15,6 +15,61 @@ using namespace std;
 using namespace Rcpp;
 
 
+//[[Rcpp::export]]
+double TruncNormal(double rho, double c1){
+
+  //m runs from 0 to (p.n_rows-1)
+  //Truncation boundaries
+  arma::vec BOUNDARIES(2);
+  BOUNDARIES(0)=-1;
+  BOUNDARIES(1)=1;
+
+  //Generate Uniform variable
+  double U = as_scalar(arma::randu(1));
+
+  //Get value to plug into qnorm
+  double X = U*R::pnorm5(BOUNDARIES(1),rho,c1,1,0)+(1-U)*R::pnorm5(BOUNDARIES(0),rho,c1,1,0);
+
+  // Rprintf("value");
+  X=R::qnorm5(X,rho,c1,1,0);
+
+  // Rprintf("Exit");
+
+  return(X);
+
+
+
+}
+
+
+//[[Rcpp::export]]
+arma::mat MATMULT(arma::mat X, arma::mat Y){
+
+  arma::mat PROD(X.n_rows,Y.n_cols);
+
+  int k;
+  int j;
+  int m=0;
+
+  for(j = 0 ;j<X.n_rows;j++){
+    for(k=0;k<PROD.n_cols;k++){
+      PROD(j,k)=0;
+      for(m=0;m<X.n_cols;m++){
+        PROD(j,k)=PROD(j,k)+X(j,m)*Y(m,k);
+      }
+
+
+
+    }
+  }
+
+
+  return(PROD);
+
+
+}
+
+
 
 
 double  GetBeta(double a, double b){
@@ -519,7 +574,7 @@ double CHOOSE(int n, int x){
 
   double Sum1=0;
 
-   double k=0;
+  double k=0;
   for(k=1;k<x;k++){
     Sum1=Sum1+log(k);
   }
@@ -637,7 +692,7 @@ double Like(arma::vec YE1, //Binary indicators of efficacy
   // 3 Tox - No Eff
   // 4 Both
   arma::vec probs(4);
-probs.zeros();
+  probs.zeros();
   //Association Constand
   double Con = (exp(psi)-1)/(exp(psi)+1);
   double Con1=0;
@@ -2988,14 +3043,7 @@ List UTEFFTOX(arma::vec YE, //Binary indicators of efficacy
       SigmaNEWINV = inv1(SigmaNEW);
 
 
-    //  MEANVEC = SigmaNEWINV*(Sigma0*MEANS0 + SIGMAINV*epVEC);
-//Replaced because it wouldn't compile in the package
-      MEANVEC[0]=Sigma0(0,0)*MEANS0(0)+Sigma0(0,1)*MEANS0(1) + SIGMAINV(0,0)*epVEC(0)+SIGMAINV(0,1)*epVEC(1);
-      MEANVEC[1]=Sigma0(1,0)*MEANS0(0)+Sigma0(1,1)*MEANS0(1) + SIGMAINV(1,0)*epVEC(0)+SIGMAINV(1,1)*epVEC(1);
-
-
-      MEANVEC[0] = SigmaNEWINV(0,0)*MEANVEC(0)+SigmaNEWINV(0,1)*MEANVEC(1);
-      MEANVEC[1] = SigmaNEWINV(1,0)*MEANVEC(0)+SigmaNEWINV(1,1)*MEANVEC(1);
+     MEANVEC = MATMULT(SigmaNEWINV,(MATMULT(Sigma0,MEANS0) + MATMULT(SIGMAINV,epVEC)));
 
 
 
@@ -3533,10 +3581,8 @@ List UTEFFTOX(arma::vec YE, //Binary indicators of efficacy
     //   rhonew=2*exp(phinew)/(1+exp(phinew))-1;
 
     // Rf_PrintValue(wrap(z9));
-    holdmax = min1(.99, rho + crho);
-    holdmin = max1(-.99, rho-crho);
 
-    rhonew = as_scalar(arma::randu(1))*(holdmax-holdmin)+holdmin;
+    rhonew = TruncNormal(rho,crho);
 
 
 
@@ -3560,7 +3606,7 @@ List UTEFFTOX(arma::vec YE, //Binary indicators of efficacy
 
 
 
-   //   alpha = alpha - as_scalar(.5*epVEC.t()*SIGMANEWINV*epVEC) + as_scalar(.5*epVEC.t()*SIGMA*epVEC);
+      //   alpha = alpha - as_scalar(.5*epVEC.t()*SIGMANEWINV*epVEC) + as_scalar(.5*epVEC.t()*SIGMA*epVEC);
       //Determinant
       alpha = alpha- epVEC[0]*(epVEC[0]*SIGMANEWINV(0,0)+epVEC[1]*SIGMANEWINV(1,0))-epVEC(1)*(epVEC[0]*SIGMANEWINV(0,1)+epVEC[1]*SIGMANEWINV(1,1));
 
@@ -3630,7 +3676,7 @@ List UTEFFTOX(arma::vec YE, //Binary indicators of efficacy
 
 
   //Return the two storage matrices and discard the rest
- List z1 = List::create(MuEStore,MuTStore,ORDERSTORE,rhoStore);
+  List z1 = List::create(MuEStore,MuTStore,ORDERSTORE,rhoStore);
   return(z1);
 }
 
@@ -3680,16 +3726,16 @@ List UTEFFTOX(arma::vec YE, //Binary indicators of efficacy
 //'@export
 //[[Rcpp::export]]
 List AssignEffTox( arma::vec YE, //Observed Efficacy Indicator Vector
-                  arma::vec YT, //Observed toxicity indicator vector.
-                  arma::vec Doses, //Vector of numeric doses assigned to patients
-                  arma::vec Dose, //Vector of Doses considered in the trial
-                  arma::vec DosesTried, //Vector of whether or not each dose has been tried
-                  arma::vec Hypermeans, //6 vector of prior means
-                  arma::vec Hypervars, //6 vector of prior standard deviations
-                  arma::vec Contour, //4 vector of Contour parameter
-                  arma::vec PiLim, //2 vector of acceptable limits
-                  arma::vec ProbLim, //2 vector of cutoff for acceptabilities
-                  double B // Number of reps to perform in MCMC
+                   arma::vec YT, //Observed toxicity indicator vector.
+                   arma::vec Doses, //Vector of numeric doses assigned to patients
+                   arma::vec Dose, //Vector of Doses considered in the trial
+                   arma::vec DosesTried, //Vector of whether or not each dose has been tried
+                   arma::vec Hypermeans, //6 vector of prior means
+                   arma::vec Hypervars, //6 vector of prior standard deviations
+                   arma::vec Contour, //4 vector of Contour parameter
+                   arma::vec PiLim, //2 vector of acceptable limits
+                   arma::vec ProbLim, //2 vector of cutoff for acceptabilities
+                   double B // Number of reps to perform in MCMC
 ){
 
   arma::vec Accept=PiLim;
@@ -4158,16 +4204,16 @@ List AssignEffTox( arma::vec YE, //Observed Efficacy Indicator Vector
 //'@export
 //[[Rcpp::export]]
 List AssignEffToxUT( arma::vec YE, //Observed Efficacy Indicator Vector
-                   arma::vec YT, //Observed toxicity indicator vector.
-                   arma::vec Doses, //Vector of numeric doses assigned to patients
-                   arma::vec Dose, //Vector of Doses considered in the trial
-                   arma::vec DosesTried, //Vector of whether or not each dose has been tried
-                   arma::vec Hypermeans, //6 vector of prior means
-                   arma::vec Hypervars, //6 vector of prior standard deviations
-                   arma::mat UT, //4 vector of Contour parameter
-                   arma::vec PiLim, //2 vector of acceptable limits
-                   arma::vec ProbLim, //2 vector of cutoff for acceptabilities
-                   double B // Number of reps to perform in MCMC
+                     arma::vec YT, //Observed toxicity indicator vector.
+                     arma::vec Doses, //Vector of numeric doses assigned to patients
+                     arma::vec Dose, //Vector of Doses considered in the trial
+                     arma::vec DosesTried, //Vector of whether or not each dose has been tried
+                     arma::vec Hypermeans, //6 vector of prior means
+                     arma::vec Hypervars, //6 vector of prior standard deviations
+                     arma::mat UT, //4 vector of Contour parameter
+                     arma::vec PiLim, //2 vector of acceptable limits
+                     arma::vec ProbLim, //2 vector of cutoff for acceptabilities
+                     double B // Number of reps to perform in MCMC
 ){
 
   arma::vec Accept=PiLim;
@@ -4465,7 +4511,7 @@ List AssignEffToxUT( arma::vec YE, //Observed Efficacy Indicator Vector
 
   //Compute posterior mean
 
-//Rprintf("OUT MCMC");
+  //Rprintf("OUT MCMC");
 
   for(j=0;j<Dose.n_rows;j++){
     ACCEPTEFF[j]=sum(AcceptEff.col(j))>(Lower(0)*B1)  ;
@@ -4501,13 +4547,13 @@ List AssignEffToxUT( arma::vec YE, //Observed Efficacy Indicator Vector
   }
 
 
-//Rprintf("GOT STUFF");
- double Con = (exp(psi)-1)/(exp(psi)+1);
-double Con1=0;
+  //Rprintf("GOT STUFF");
+  double Con = (exp(psi)-1)/(exp(psi)+1);
+  double Con1=0;
   double piE=0;
   double piT=0;
 
-//  Rf_PrintValue(wrap(UT));
+  //  Rf_PrintValue(wrap(UT));
 
   //Now get the mean desireability for each dose if they are acceptable
   for(j=0;j<Dose.n_rows;j++){
@@ -4516,14 +4562,14 @@ double Con1=0;
 
 
 
-          //Dose is ACCEPTABLe
-          piE=PiEff(j);
-          piT=PiTox(j);
+      //Dose is ACCEPTABLe
+      piE=PiEff(j);
+      piT=PiTox(j);
 
-          //Now we have the probabilities of toxictity and efficacy for this dose.
-          Con1 = piE*(1-piE)*piT*(1-piT)*Con;
-          DESIRE[j]=UT(0,0)*(Con1 + (1-piE)*(1-piT))+UT(0,1)*((1-piT)*piE - Con1) + UT(1,1)*(piE*piT + Con1);
-ACCEPT[j]=1;
+      //Now we have the probabilities of toxictity and efficacy for this dose.
+      Con1 = piE*(1-piE)*piT*(1-piT)*Con;
+      DESIRE[j]=UT(0,0)*(Con1 + (1-piE)*(1-piT))+UT(0,1)*((1-piT)*piE - Con1) + UT(1,1)*(piE*piT + Con1);
+      ACCEPT[j]=1;
 
     }else{
       ACCEPT[j]=0;
@@ -4534,7 +4580,7 @@ ACCEPT[j]=1;
 
   }
 
-// Rprintf("Out Desirea");
+  // Rprintf("Out Desirea");
 
   //Check if we should stop the trial
 

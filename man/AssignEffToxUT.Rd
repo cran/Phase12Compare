@@ -4,8 +4,19 @@
 \alias{AssignEffToxUT}
 \title{Determines the optimal dose to assign the next patient cohort.}
 \usage{
-AssignEffToxUT(YE, YT, Doses, Dose, DosesTried, Hypermeans, Hypervars, UT,
-  PiLim, ProbLim, B)
+AssignEffToxUT(
+  YE,
+  YT,
+  Doses,
+  Dose,
+  DosesTried,
+  Hypermeans,
+  Hypervars,
+  UT,
+  PiLim,
+  ProbLim,
+  B
+)
 }
 \arguments{
 \item{YE}{Vector containing observed efficacy indicators.}

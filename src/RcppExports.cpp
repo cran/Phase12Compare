@@ -6,6 +6,30 @@
 
 using namespace Rcpp;
 
+// TruncNormal
+double TruncNormal(double rho, double c1);
+RcppExport SEXP _Phase12Compare_TruncNormal(SEXP rhoSEXP, SEXP c1SEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< double >::type rho(rhoSEXP);
+    Rcpp::traits::input_parameter< double >::type c1(c1SEXP);
+    rcpp_result_gen = Rcpp::wrap(TruncNormal(rho, c1));
+    return rcpp_result_gen;
+END_RCPP
+}
+// MATMULT
+arma::mat MATMULT(arma::mat X, arma::mat Y);
+RcppExport SEXP _Phase12Compare_MATMULT(SEXP XSEXP, SEXP YSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type X(XSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type Y(YSEXP);
+    rcpp_result_gen = Rcpp::wrap(MATMULT(X, Y));
+    return rcpp_result_gen;
+END_RCPP
+}
 // GETBIN
 arma::vec GETBIN(arma::vec PVEC);
 RcppExport SEXP _Phase12Compare_GETBIN(SEXP PVECSEXP) {
@@ -149,6 +173,8 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_Phase12Compare_TruncNormal", (DL_FUNC) &_Phase12Compare_TruncNormal, 2},
+    {"_Phase12Compare_MATMULT", (DL_FUNC) &_Phase12Compare_MATMULT, 2},
     {"_Phase12Compare_GETBIN", (DL_FUNC) &_Phase12Compare_GETBIN, 1},
     {"_Phase12Compare_ReturnOpt", (DL_FUNC) &_Phase12Compare_ReturnOpt, 2},
     {"_Phase12Compare_GetDesire", (DL_FUNC) &_Phase12Compare_GetDesire, 3},

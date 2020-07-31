@@ -4,8 +4,21 @@
 \alias{RunAdaptiveEffToxTrialCORR}
 \title{Simulates utility based Efftox trials}
 \usage{
-RunAdaptiveEffToxTrialCORR(DoseStart, Dose, Hypermeans, Hypervars, UT,
-  PiLim, ProbLim, cohort, NET, NF, B, nSims, PMAT)
+RunAdaptiveEffToxTrialCORR(
+  DoseStart,
+  Dose,
+  Hypermeans,
+  Hypervars,
+  UT,
+  PiLim,
+  ProbLim,
+  cohort,
+  NET,
+  NF,
+  B,
+  nSims,
+  PMAT
+)
 }
 \arguments{
 \item{DoseStart}{Dose level to START the EFF-Tox Trial}

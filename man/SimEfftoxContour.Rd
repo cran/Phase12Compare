@@ -4,8 +4,22 @@
 \alias{SimEfftoxContour}
 \title{Simulates trial replications from the Efftox model with desirability optimality function.}
 \usage{
-SimEfftoxContour(NSims, Dose, PE, PT, corET, Nmax, cohort, Contour, CutE,
-  CutT, AcceptE, AcceptT, HypermeansEFF, HypervarsEFF)
+SimEfftoxContour(
+  NSims,
+  Dose,
+  PE,
+  PT,
+  corET,
+  Nmax,
+  cohort,
+  Contour,
+  CutE,
+  CutT,
+  AcceptE,
+  AcceptT,
+  HypermeansEFF,
+  HypervarsEFF
+)
 }
 \arguments{
 \item{NSims}{Number of trial simulations to run.}

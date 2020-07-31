@@ -4,8 +4,22 @@
 \alias{SimEfftoxUt}
 \title{Simulates trial replications from the Efftox model with utility optimality function.}
 \usage{
-SimEfftoxUt(NSims, Dose, PE, PT, corET, Nmax, cohort, UT, CutE, CutT,
-  AcceptE, AcceptT, HypermeansEFF, HypervarsEFF)
+SimEfftoxUt(
+  NSims,
+  Dose,
+  PE,
+  PT,
+  corET,
+  Nmax,
+  cohort,
+  UT,
+  CutE,
+  CutT,
+  AcceptE,
+  AcceptT,
+  HypermeansEFF,
+  HypervarsEFF
+)
 }
 \arguments{
 \item{NSims}{Number of trial simulations to run.}

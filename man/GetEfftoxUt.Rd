@@ -4,8 +4,22 @@
 \alias{GetEfftoxUt}
 \title{Assigns next patient cohort based on the Efftox model with a Utility based objective function.}
 \usage{
-GetEfftoxUt(YE, YT, Doses, Dose, Dosetried, cohort, UT, CutE, CutT,
-  AcceptE, AcceptT, HypermeansEFF, HypervarsEFF, B)
+GetEfftoxUt(
+  YE,
+  YT,
+  Doses,
+  Dose,
+  Dosetried,
+  cohort,
+  UT,
+  CutE,
+  CutT,
+  AcceptE,
+  AcceptT,
+  HypermeansEFF,
+  HypervarsEFF,
+  B
+)
 }
 \arguments{
 \item{YE}{Length n binary indicator vector of efficacy status.}
